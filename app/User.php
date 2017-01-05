@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Story::class);
     }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->id === 1;
+    }
 }

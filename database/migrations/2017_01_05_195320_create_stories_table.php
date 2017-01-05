@@ -17,8 +17,8 @@ class CreateStoriesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('title');
-            $table->boolean('private');
-            $table->boolean('in_front');
+            $table->boolean('private')->default(false);
+            $table->boolean('in_front')->default(false);
             $table->timestamps();
         });
     }

@@ -18,3 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::resource('/stories', 'StoriesController');
+Route::resource('/stories/{story}/messages', 'MessagesController');
