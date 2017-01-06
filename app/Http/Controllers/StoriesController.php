@@ -9,7 +9,7 @@ class StoriesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['index']);
     }
     /**
      * Display a listing of the resource.
@@ -20,6 +20,15 @@ class StoriesController extends Controller
     {
         $stories = Story::where('in_front', false)->where('private', false)->get();
 
+        if (request()->user()) {
+            $stories = Story::where('in_front', false)->get()->filter(function($story) {
+                if ($story->private) {
+                    return $story->user_id == request()->user()->id;
+                }
+
+                return true;
+            });
+        }
         return response()->view('stories.index', [
             'stories' => $stories,
         ]);
@@ -65,7 +74,7 @@ class StoriesController extends Controller
      */
     public function show(Story $story)
     {
-        $messages = $story->messages();
+        $messages = $story->messages;
 
         return response()->view('stories.show', [
             'story' => $story,

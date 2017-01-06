@@ -31,10 +31,11 @@
                         @else
                             <ul class="list-group">
                                 @foreach($messages as $message)
-                                    <li class="list-group-item list-group-item-text"><a href="{{ route('messages.edit', ['story' => $story->id, 'message' => $message->id]) }}">{{ $message->body }}</a></li>
+                                    <li class="list-group-item list-group-item-text"><a href="{{ route('messages.edit', ['story' => $story->id, 'message' => $message->id]) }}"><a name="{{ $message->id }}"></a>{{ $message->body }} :: parent: {{ $message->parent  }} :: time: {{ $message->time }}</a></li>
                                 @endforeach
                             </ul>
                         @endunless
+                        @include('messages.create')
                     </div>
                 </div>
             </div>

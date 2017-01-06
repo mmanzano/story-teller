@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Message;
+use App\Story;
 use Illuminate\Http\Request;
 
 class MessagesController extends Controller
@@ -32,9 +34,23 @@ class MessagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Story $story)
     {
-        //
+        $parent = $story->messages()->latest()->first();
+
+        $message = new Message;
+        $message->story_id = $story->id;
+        $message->body = $request->get('body');
+        $message->save();
+
+        if (!is_null($parent)) {
+            $message->parent = $parent->id;
+            $message->time = $message->created_at->diffInSeconds($parent->created_at);
+        }
+
+        $message->save();
+
+        return redirect()->to(route('stories.show', $story->id) . '#' . $message->id);
     }
 
     /**
