@@ -131,4 +131,20 @@ class StoriesController extends Controller
         $story->delete();
         return redirect()->to(route('stories.index', $story->id));
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  Story  $story
+     * @return \Illuminate\Http\Response
+     */
+    public function play(Story $story)
+    {
+        $messages = $story->messages;
+
+        return response()->view('stories.play', [
+            'story' => $story,
+            'messages' => $messages,
+        ]);
+    }
 }

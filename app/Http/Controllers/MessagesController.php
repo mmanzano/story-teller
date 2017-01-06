@@ -13,9 +13,15 @@ class MessagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Story $story, Message $parent = null)
     {
-        //
+        if (is_null($parent)) {
+            $message = $story->messages->first();
+        } else {
+            $message = $story->messages->where('parent', $parent->id)->first();
+        }
+
+        return response()->json($message);
     }
 
     /**
@@ -45,7 +51,7 @@ class MessagesController extends Controller
 
         if (!is_null($parent)) {
             $message->parent = $parent->id;
-            $message->time = $message->created_at->diffInSeconds($parent->created_at);
+            $parent->time = $message->created_at->diffInSeconds($parent->created_at);
         }
 
         $message->save();

@@ -12,12 +12,17 @@
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <div class="form-group">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <a href="{{ route('stories.edit', $story->id) }}" class="btn btn-primary">
                                         Edit
                                     </a>
                                 </div>
-                                <div class="col-md-6 text-right">
+                                <div class="col-md-6 text-center">
+                                    <a href="{{ route('stories.play', $story->id) }}" class="btn btn-primary">
+                                        Play Story
+                                    </a>
+                                </div>
+                                <div class="col-md-3 text-right">
                                     <button type="submit" class="btn btn-danger">
                                         Delete Story
                                     </button>
