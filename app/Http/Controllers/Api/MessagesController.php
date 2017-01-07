@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Message;
 use App\Story;
 use Illuminate\Http\Request;
@@ -56,7 +57,7 @@ class MessagesController extends Controller
 
         $message->save();
 
-        return redirect()->to(route('stories.show', $story->id) . '#' . $message->id);
+        return response()->json($story->messages);
     }
 
     /**

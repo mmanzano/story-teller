@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Story;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,6 @@ class StoriesController extends Controller
     {
         $this->middleware('auth')->except(['index']);
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +22,7 @@ class StoriesController extends Controller
         $stories = Story::where('in_front', false)->where('private', false)->get();
 
         if (request()->user()) {
-            $stories = Story::where('in_front', false)->get()->filter(function ($story) {
+            $stories = Story::where('in_front', false)->get()->filter(function($story) {
                 if ($story->private) {
                     return $story->user_id == request()->user()->id;
                 }
@@ -30,9 +30,7 @@ class StoriesController extends Controller
                 return true;
             });
         }
-        return response()->view('stories.index', [
-            'stories' => $stories,
-        ]);
+        return response()->json($stories);
     }
 
     /**
@@ -42,13 +40,13 @@ class StoriesController extends Controller
      */
     public function create()
     {
-        return response()->view('stories.create');
+        // return response()->view('stories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -64,43 +62,38 @@ class StoriesController extends Controller
         $story->in_front = $request->get('in_front') ? true : false;
         $story->save();
 
-        return redirect()->to(route('messages.index', $story->id));
+        return response()->json($story);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Story $story
+     * @param  Story  $story
      * @return \Illuminate\Http\Response
      */
     public function show(Story $story)
     {
-        $messages = $story->messages;
+        $story = Story::with('messages')->find($story->id);
 
-        return response()->view('stories.show', [
-            'story' => $story,
-            'messages' => $messages,
-        ]);
+        return response()->json($story);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Story $story
+     * @param  Story  $story
      * @return \Illuminate\Http\Response
      */
     public function edit(Story $story)
     {
-        return response()->view('stories.edit', [
-            'story' => $story,
-        ]);
+        // return response()->view('stories.edit', ['story' => $story]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Story $story
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Story  $story
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Story $story)
@@ -114,29 +107,32 @@ class StoriesController extends Controller
         $story->in_front = $request->get('in_front') ? true : false;
         $story->save();
 
-        return redirect()->to(route('stories.show', $story->id));
+        $story = Story::with('messages')->find($story->id);
+
+        return response()->json($story);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Story $story
+     * @param  Story  $story
      * @return \Illuminate\Http\Response
      */
     public function destroy(Story $story)
     {
-        $story->messages->map(function ($message) {
+        $story->messages->map(function($message) {
             $message->delete();
         });
 
         $story->delete();
-        return redirect()->to(route('stories.index', $story->id));
+
+        return response()->json('Story Deleted Successfully');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Story $story
+     * @param  Story  $story
      * @return \Illuminate\Http\Response
      */
     public function play(Story $story)
