@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <story :story="{{ $story }}" :user="{{ Auth::user() }}" play="true"></story>
+    <story :story="{{ $story }}"
+           @if (Auth::check())
+               :user="{{ Auth::user() }}"
+           @else
+               :user="{ id: null }"
+           @endif
+           play="true"></story>
 @endsection
