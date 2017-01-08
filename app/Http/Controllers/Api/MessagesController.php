@@ -86,22 +86,37 @@ class MessagesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  Message $message
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Message $message)
     {
-        //
+        $this->validate($request, [
+            'body' => 'required',
+        ]);
+
+        $message->body = $request->get('body');
+
+        $message->save();
+
+        return response()->json($message);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  Message $message
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Message $message)
     {
-        //
+        $son = Message::where('parent', $message->id)->first();
+
+        if ($son) {
+            $son->parent = $message->parent;
+            $son->save();
+        }
+
+        $message->delete();
     }
 }
