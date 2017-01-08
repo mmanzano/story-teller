@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <message v-for='message in messages' :message='message' :user='user' :story='story'></message>
+        <message v-for='message in messages' :message='message' :user='user' :story='story' :play='play'></message>
 
         <div class="row" v-if="! messages.length">
             <div class="col-md-8 col-md-offset-2">
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" v-if="isAuthor">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-warning">
                     <div class="panel-body">
@@ -129,9 +129,10 @@
                     var message = response.data;
                     if(message.id !== undefined) {
                         this.messages.push(message);
-                        console.log(message);
-                        this.sleep(message.time * 1000);
-                        this.fetchStoryMessagesPlay(message.id);
+                        var that = this;
+                        setTimeout(function (that) {
+                            return that.fetchStoryMessagesPlay(message.id)
+                        }, message.time * 1000, that);
                     } else {
                         this.sleep(2000);
                         message = {
@@ -146,9 +147,14 @@
             },
             createMessage() {
                 this.$http.post('/api/stories/' + this.storyLive.id + '/messages', this.message).then((response) => {
-                    this.messages.push(this.message);
-                    this.message = {};
-                    document.getElementById('message').focus();
+                    let page_url = '/api/stories/' + this.storyLive.id + '/messages/all';
+                    this.$http.get(page_url).then((response) => {
+                        this.message = {};
+                        document.getElementById('message').focus();
+                        this.messages = response.data;
+                    }, (response) => {
+                        console.log(response);
+                    })
                 }, (response) => {
                     console.log(response);
                 });
@@ -170,7 +176,7 @@
                     console.log(response);
                 });
             },
-            sleep(sleepDuration){
+            sleep(sleepDuration) {
                 var now = new Date().getTime();
                 while(new Date().getTime() < now + sleepDuration){ /* do nothing */ }
             },

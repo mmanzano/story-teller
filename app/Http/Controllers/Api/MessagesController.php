@@ -64,12 +64,16 @@ class MessagesController extends Controller
 
         if (!is_null($parent)) {
             $message->parent = $parent->id;
-            $message->time = $message->created_at->diffInSeconds($parent->created_at);
+            $parent->time = $message->created_at->diffInSeconds($parent->created_at);
+            $parent->save();
         }
 
         $message->save();
 
-        return response()->json($story->messages);
+        return response()->json([
+            'message' => $message,
+            'parent' => $parent
+        ]);
     }
 
     /**
@@ -108,6 +112,8 @@ class MessagesController extends Controller
         ]);
 
         $message->body = $request->get('body');
+
+        $message->time = $request->get('time', null);
 
         $message->save();
 

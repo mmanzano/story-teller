@@ -12,7 +12,8 @@
                                 {{ messageLive.body }}
                                 <div class="form-group">
                                     <label class="form-label message__label">Edit Message:</label>
-                                    <textarea rows="2" class="form-control message__textarea" v-model="messageLive.body"></textarea>
+                                    <textarea rows="2" class="form-control message__textarea" v-model="messageLive.body"></textarea><br/>
+                                    time: <input v-model="messageLive.time"> Seconds
                                 </div>
                             </div>
                         </div>
@@ -26,11 +27,17 @@
                     <div v-else>
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                {{ messageLive.body }}
+                                {{ message.body }}
+                            </div>
+                        </div>
+                        <div class="row" v-if="play">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                <small>{{ messageTime }}</small>
                             </div>
                         </div>
                         <div class="row message__actions" v-if="isAuthor">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                <span class="btn btn-danger">{{ message.time }}</span>
                                 <button @click="messageEdit = (! messageEdit)" class="btn btn-success">Edit</button>
                                 <button @click="deleteMessage" class="btn btn-danger">Delete</button>
                             </div>
@@ -57,13 +64,15 @@
           return {
               messageEdit: false,
               messageDeleted: false,
+              messageTime: new Date().toLocaleTimeString(),
               messageLive: this.message
           }
         },
         props: [
             'message',
             'user',
-            'story'
+            'story',
+            'play'
         ],
         computed: {
             isAuthor() {
