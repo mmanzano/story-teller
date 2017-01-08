@@ -26,6 +26,18 @@ class MessagesController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all(Story $story)
+    {
+        $messages = $story->messages;
+
+        return response()->json($messages);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -52,7 +64,7 @@ class MessagesController extends Controller
 
         if (!is_null($parent)) {
             $message->parent = $parent->id;
-            $parent->time = $message->created_at->diffInSeconds($parent->created_at);
+            $message->time = $message->created_at->diffInSeconds($parent->created_at);
         }
 
         $message->save();

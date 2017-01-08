@@ -1,4 +1,4 @@
-// Usage <story :story="story"></story>
+// Usage <story :story="story" :user="user" play="true|false"></story>
 
 <template>
     <div class="container">
@@ -17,8 +17,9 @@
                         <span class="btn btn-success" v-if="storyLive.private">Private</span>
                         <span class="btn btn-success" v-else>Public</span>
                         <span class="btn btn-success" v-if="storyLive.in_front">In Front</span>
+                        <span class="btn btn-success" @click="goToPlayMode">Go to play mode</span>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" v-if="isAuthor">
                         <div class="row message__actions">
                             <div v-if="storyEdit" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
                                 <button  @click="updateStory" class="btn btn-success">Save</button>
@@ -34,7 +35,7 @@
             </div>
         </div>
 
-        <message v-for='message in messages' :message='message' @messagedeleted='refreshUserNotes(paginationNotes.current_page)'></message>
+        <message v-for='message in messages' :message='message' :user='user' :story='story'></message>
 
         <div class="row" v-if="! messages.length">
             <div class="col-md-8 col-md-offset-2">
@@ -68,7 +69,7 @@
                 </div>
             </div>
         </div>
-
+        <div id="end"></div>
     </div>
 </template>
 
@@ -83,7 +84,11 @@
 
     export default {
          mounted() {
-            this.fetchStoryMessages();
+            if (this.play == "true") {
+                this.fetchStoryMessagesPlay();
+            } else {
+                this.fetchStoryMessages();
+            }
         },
         data: function() {
             return {
@@ -95,10 +100,26 @@
             };
         },
         props: [
-            'story'
+            'story',
+            'user',
+            'play'
         ],
+        computed: {
+            isAuthor() {
+                return (this.story.user_id == this.user.id);
+            }
+        },
         methods: {
-            fetchStoryMessages(messageId) {
+            fetchStoryMessages() {
+                var page_url = '/api/stories/' + this.storyLive.id + '/messages/all';
+                this.$http.get(page_url).then((response) => {
+                        this.messages = response.data;
+                }, (response) => {
+                    console.log(response);
+                });
+            },
+            fetchStoryMessagesPlay(messageId) {
+                document.getElementById('end').scrollIntoView();
                 if (messageId === undefined) {
                     var page_url = '/api/stories/' + this.storyLive.id + '/messages';
                 } else {
@@ -108,7 +129,16 @@
                     var message = response.data;
                     if(message.id !== undefined) {
                         this.messages.push(message);
-                        this.fetchStoryMessages(message.id);
+                        console.log(message);
+                        this.sleep(message.time * 1000);
+                        this.fetchStoryMessagesPlay(message.id);
+                    } else {
+                        this.sleep(2000);
+                        message = {
+                            body: "This is the end of Story. We hope you enjoy it"
+                        }
+                        this.messages.push(message)
+                        document.getElementById('end').scrollIntoView();
                     }
                 }, (response) => {
                     console.log(response);
@@ -139,6 +169,14 @@
                 }, (response) => {
                     console.log(response);
                 });
+            },
+            sleep(sleepDuration){
+                var now = new Date().getTime();
+                while(new Date().getTime() < now + sleepDuration){ /* do nothing */ }
+            },
+            goToPlayMode() {
+                this.messages = [];
+                this.fetchStoryMessagesPlay();
             }
         },
         components: {

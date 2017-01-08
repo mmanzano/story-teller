@@ -16,7 +16,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row message__actions">
+                        <div class="row message__actions" v-if="isAuthor">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
                                 <button @click="updateMessage" class="btn btn-success">Save</button>
                             </div>
@@ -29,7 +29,7 @@
                                 {{ messageLive.body }}
                             </div>
                         </div>
-                        <div class="row message__actions">
+                        <div class="row message__actions" v-if="isAuthor">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
                                 <button @click="messageEdit = (! messageEdit)" class="btn btn-success">Edit</button>
                                 <button @click="deleteMessage" class="btn btn-danger">Delete</button>
@@ -61,8 +61,15 @@
           }
         },
         props: [
-            'message'
+            'message',
+            'user',
+            'story'
         ],
+        computed: {
+            isAuthor() {
+                return (this.story.user_id == this.user.id);
+            }
+        },
         methods: {
             updateMessage() {
                 this.$http.patch('/api/messages/' + this.messageLive.id, this.messageLive).then((response) => {
