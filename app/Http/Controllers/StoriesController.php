@@ -64,7 +64,7 @@ class StoriesController extends Controller
         $story->in_front = $request->get('in_front') ? true : false;
         $story->save();
 
-        return redirect()->to(route('messages.index', $story->id));
+        return redirect()->to(route('story.show', $story->id));
     }
 
     /**
