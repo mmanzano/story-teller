@@ -5,8 +5,10 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Stories</div>
+                    <div class="panel-heading">Stories <a href="{{ route('stories.create') }}" class="btn btn-success">Create Story</a></div>
                     <div class="panel-body">
+
+
                         @unless ($stories->count())
                             <h1>No Stories now</h1>
                         @else

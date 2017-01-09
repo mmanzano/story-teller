@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="anonymous" class="col-md-4 control-label">Private</label>
+                                <label for="anonymous" class="col-md-4 control-label">Anonymous</label>
 
                                 <div class="col-md-6">
                                     <input id="anonymous" type="checkbox" name="anonymous"
