@@ -61,7 +61,7 @@
                                 <div class="form-group">
                                     <label class="form-label message__label">Add Message to story:</label>
                                     <textarea rows="2" class="form-control message__textarea" v-model="message.body" id="message"></textarea>
-                                    <button @click="createMessage" class="btn btn-success message__actions-create">Crear nota</button>
+                                    <button @click="createMessage" class="btn btn-success message__actions-create">Add Message</button>
                                 </div>
                             </div>
                         </div>
@@ -147,14 +147,11 @@
             },
             createMessage() {
                 this.$http.post('/api/stories/' + this.storyLive.id + '/messages', this.message).then((response) => {
-                    let page_url = '/api/stories/' + this.storyLive.id + '/messages/all';
-                    this.$http.get(page_url).then((response) => {
-                        this.message = {};
-                        document.getElementById('message').focus();
-                        this.messages = response.data;
-                    }, (response) => {
-                        console.log(response);
-                    })
+                    this.messages.push(response.data.message);
+                    console.log(this.messages[this.messages.length - 2]);
+                    this.messages[this.messages.length - 2] = response.data.parent;
+                    document.getElementById('message').focus();
+                    this.message = {};
                 }, (response) => {
                     console.log(response);
                 });

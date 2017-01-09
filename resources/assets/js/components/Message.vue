@@ -9,11 +9,11 @@
                     <div v-if="messageEdit">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                {{ messageLive.body }}
+                                {{ message.body }}
                                 <div class="form-group">
                                     <label class="form-label message__label">Edit Message:</label>
-                                    <textarea rows="2" class="form-control message__textarea" v-model="messageLive.body"></textarea><br/>
-                                    time: <input v-model="messageLive.time"> Seconds
+                                    <textarea rows="2" class="form-control message__textarea" v-model="message.body"></textarea><br/>
+                                    time: <input v-model="message.time"> Seconds
                                 </div>
                             </div>
                         </div>
@@ -64,8 +64,7 @@
           return {
               messageEdit: false,
               messageDeleted: false,
-              messageTime: new Date().toLocaleTimeString(),
-              messageLive: this.message
+              messageTime: new Date().toLocaleTimeString()
           }
         },
         props: [
@@ -81,15 +80,15 @@
         },
         methods: {
             updateMessage() {
-                this.$http.patch('/api/messages/' + this.messageLive.id, this.messageLive).then((response) => {
-                    this.messageLive = response.data;
+                this.$http.patch('/api/messages/' + this.message.id, this.message).then((response) => {
+                    this.message = response.data;
                     this.messageEdit = ! this.messageEdit;
                 }, (response) => {
                     console.log(response);
                 });
             },
             deleteMessage() {
-                this.$http.delete('/api/messages/' + this.messageLive.id).then((response) => {
+                this.$http.delete('/api/messages/' + this.message.id).then((response) => {
                     this.messageDeleted = true;
                 }, (response) => {
                     console.log(response);

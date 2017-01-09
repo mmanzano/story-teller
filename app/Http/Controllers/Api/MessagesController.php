@@ -77,7 +77,7 @@ class MessagesController extends Controller
 
         return response()->json([
             'message' => $message,
-            'parent' => $parent
+            'parent' => $parent,
         ]);
     }
 
