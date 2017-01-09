@@ -12,7 +12,17 @@
                         @else
                             <ul class="list-group">
                                 @foreach($stories as $story)
-                                    <li class="list-group-item list-group-item-text"><a href="{{ route('stories.show', $story->id) }}">{{ $story->title }}</a></li>
+                                    <li class="list-group-item list-group-item-text">
+                                        <a href="{{ route('stories.show', $story->id) }}">{{ $story->title }}</a>
+                                        @if($story->private)
+                                            <span class="bg-danger" style="padding:10px">private</span>
+                                        @else
+                                            <span class="bg-success" style="padding:10px">public</span>
+                                        @endif
+                                        @if($story->in_front)
+                                            <span class="bg-success" style="padding:10px">In Front</span>
+                                        @endif
+                                    </li>
                                 @endforeach
                             </ul>
                         @endunless

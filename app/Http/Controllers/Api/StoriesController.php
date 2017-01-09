@@ -23,6 +23,10 @@ class StoriesController extends Controller
 
         if (request()->user()) {
             $stories = Story::where('in_front', false)->get()->filter(function($story) {
+                if (request()->user()->isAdmin){
+                    return true;
+                }
+
                 if ($story->private) {
                     return $story->user_id == request()->user()->id;
                 }

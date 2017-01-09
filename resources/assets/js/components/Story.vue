@@ -10,7 +10,7 @@
                         {{ storyLive.title }}<br />
                         <input v-model="storyLive.title"><br />
                         Private: <input type="checkbox" v-model="storyLive.private"><br />
-                        In Front: <input type="checkbox" v-model="storyLive.in_front"><br />
+                        <span v-if="isAdmin">In Front: <input type="checkbox" v-model="storyLive.in_front"></span><br />
                     </div>
                     <div class="panel-heading" v-else>
                         {{ storyLive.title }}
@@ -106,7 +106,10 @@
         ],
         computed: {
             isAuthor() {
-                return (this.story.user_id == this.user.id);
+                return ((this.story.user_id == this.user.id) || (this.user.id == 1));
+            },
+            isAdmin() {
+                return (this.user.id == 1);
             }
         },
         methods: {

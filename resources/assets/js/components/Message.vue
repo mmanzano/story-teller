@@ -75,7 +75,7 @@
         ],
         computed: {
             isAuthor() {
-                return (this.story.user_id == this.user.id);
+                return ((this.story.user_id == this.user.id) || (this.user.id == 1));
             }
         },
         methods: {

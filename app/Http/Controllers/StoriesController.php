@@ -22,13 +22,18 @@ class StoriesController extends Controller
         $stories = Story::where('in_front', false)->where('private', false)->get();
 
         if (request()->user()) {
-            $stories = Story::where('in_front', false)->get()->filter(function ($story) {
-                if ($story->private) {
-                    return $story->user_id == request()->user()->id;
-                }
+            if (request()->user()->isAdmin) {
+                $stories = Story::all();
+            } else {
+                $stories = Story::where('in_front', false)->get()->filter(function ($story) {
+                    if ($story->private) {
+                        return $story->user_id == request()->user()->id;
+                    }
 
-                return true;
-            });
+                    return true;
+                });
+            }
+
         }
         return response()->view('stories.index', [
             'stories' => $stories,
@@ -40,7 +45,8 @@ class StoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public
+    function create()
     {
         return response()->view('stories.create');
     }
@@ -51,8 +57,10 @@ class StoriesController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public
+    function store(
+        Request $request
+    ) {
         $this->validate($request, [
             'title' => 'required',
         ]);
@@ -73,8 +81,10 @@ class StoriesController extends Controller
      * @param  Story $story
      * @return \Illuminate\Http\Response
      */
-    public function show(Story $story)
-    {
+    public
+    function show(
+        Story $story
+    ) {
         $messages = $story->messages;
 
         return response()->view('stories.show', [
@@ -89,8 +99,10 @@ class StoriesController extends Controller
      * @param  Story $story
      * @return \Illuminate\Http\Response
      */
-    public function edit(Story $story)
-    {
+    public
+    function edit(
+        Story $story
+    ) {
         return response()->view('stories.edit', [
             'story' => $story,
         ]);
@@ -103,8 +115,11 @@ class StoriesController extends Controller
      * @param  Story $story
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Story $story)
-    {
+    public
+    function update(
+        Request $request,
+        Story $story
+    ) {
         $this->validate($request, [
             'title' => 'required',
         ]);
@@ -123,8 +138,10 @@ class StoriesController extends Controller
      * @param  Story $story
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Story $story)
-    {
+    public
+    function destroy(
+        Story $story
+    ) {
         $story->messages->map(function ($message) {
             $message->delete();
         });
@@ -139,8 +156,10 @@ class StoriesController extends Controller
      * @param  Story $story
      * @return \Illuminate\Http\Response
      */
-    public function play(Story $story)
-    {
+    public
+    function play(
+        Story $story
+    ) {
         $messages = $story->messages;
 
         return response()->view('stories.play', [

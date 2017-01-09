@@ -24,31 +24,33 @@
                                 </div>
                             </div>
 
+
+                            <div class="form-group">
+                                <label for="private" class="col-md-4 control-label">Private</label>
+
+                                <div class="col-md-6">
+                                    <input id="private" type="checkbox" name="private"
+                                       @if (old('private'))
+                                            checked
+                                       @endif
+                                    >
+                                </div>
+                            </div>
+
+
                             @if (auth()->user()->isAdmin)
                                 <div class="form-group">
-                                    <label for="private" class="col-md-4 control-label">Private</label>
+                                    <label for="in_front" class="col-md-4 control-label">In front</label>
 
                                     <div class="col-md-6">
-                                        <input id="private" type="checkbox" name="private"
-                                           @if (old('private'))
+                                        <input id="in_front" type="checkbox" name="in_front"
+                                            @if (old('in_front'))
                                                 checked
-                                           @endif
+                                            @endif
                                         >
                                     </div>
                                 </div>
                             @endif
-
-                            <div class="form-group">
-                                <label for="in_front" class="col-md-4 control-label">In front</label>
-
-                                <div class="col-md-6">
-                                    <input id="in_front" type="checkbox" name="in_front"
-                                        @if (old('in_front'))
-                                            checked
-                                        @endif
-                                    >
-                                </div>
-                            </div>
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
