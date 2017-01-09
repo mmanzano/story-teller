@@ -10,14 +10,16 @@
                         {{ storyLive.title }}<br />
                         <input v-model="storyLive.title"><br />
                         Private: <input type="checkbox" v-model="storyLive.private"><br />
+                        Anonymous: <input type="checkbox" v-model="storyLive.anonymous"><br />
                         <span v-if="isAdmin">In Front: <input type="checkbox" v-model="storyLive.in_front"></span><br />
                     </div>
                     <div class="panel-heading" v-else>
                         {{ storyLive.title }}
-                        <span class="btn btn-success" v-if="storyLive.private">Private</span>
-                        <span class="btn btn-success" v-else>Public</span>
-                        <span class="btn btn-success" v-if="storyLive.in_front">In Front</span>
-                        <span class="btn btn-success" @click="goToPlayMode">Go to play mode</span>
+                        <span class="bg-info" style="padding:10px">{{ storyLive.author }}</span>
+                        <span class="bg-danger" style="padding:10px" v-if="storyLive.private">Private</span>
+                        <span class="bg-success" style="padding:10px" v-else>Public</span>
+                        <span class="bg-success" style="padding:10px" v-if="storyLive.in_front">In Front</span>
+                        <span class="btn btn-success" style="padding:10px" @click="goToPlayMode">Go to play mode</span>
                     </div>
                     <div class="panel-body" v-if="isAuthor">
                         <div class="row message__actions">

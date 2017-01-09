@@ -9,6 +9,11 @@ class Story extends Model
     protected $casts = [
         'private' => 'boolean',
         'in_front' => 'boolean',
+        'anonymous' => 'boolean',
+    ];
+
+    protected $appends = [
+        'author'
     ];
 
     public function user()
@@ -19,5 +24,14 @@ class Story extends Model
     public function messages()
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function getAuthorAttribute()
+    {
+        if($this->anonymous) {
+            return 'Anonymous';
+        }
+
+        return $this->user->name;
     }
 }

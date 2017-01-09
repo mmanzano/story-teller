@@ -37,6 +37,18 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label for="anonymous" class="col-md-4 control-label">Private</label>
+
+                                <div class="col-md-6">
+                                    <input id="anonymous" type="checkbox" name="anonymous"
+                                        @if (old('anonymous'))
+                                            checked
+                                        @endif
+                                    >
+                                </div>
+                            </div>
+
 
                             @if (auth()->user()->isAdmin)
                                 <div class="form-group">

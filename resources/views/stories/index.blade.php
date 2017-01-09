@@ -14,6 +14,13 @@
                                 @foreach($stories as $story)
                                     <li class="list-group-item list-group-item-text">
                                         <a href="{{ route('stories.show', $story->id) }}">{{ $story->title }}</a>
+                                        @if(Auth::check() && Auth::user()->isAdmin)
+                                            <span class="bg-info" style="padding:10px">{{ $story->user->name }}</span>
+                                        @endif
+
+                                        <span class="bg-info" style="padding:10px">{{ $story->author }}</span>
+
+
                                         @if($story->private)
                                             <span class="bg-danger" style="padding:10px">private</span>
                                         @else

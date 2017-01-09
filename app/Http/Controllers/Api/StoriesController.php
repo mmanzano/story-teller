@@ -63,6 +63,7 @@ class StoriesController extends Controller
         $story->user_id = $request->user()->id;
         $story->title = $request->get('title');
         $story->private = $request->get('private') ? true : false;
+        $story->anonymous = $request->get('anonymous') ? true : false;
         $story->in_front = $request->get('in_front') ? true : false;
         $story->save();
 
@@ -108,6 +109,7 @@ class StoriesController extends Controller
 
         $story->title = $request->get('title');
         $story->private = $request->get('private') ? true : false;
+        $story->anonymous = $request->get('anonymous') ? true : false;
         $story->in_front = $request->get('in_front') ? true : false;
         $story->save();
 
