@@ -14,9 +14,9 @@ Se trataría de que algunos autores escribieran historias en una web en formato 
 
 ## Backlog
 
-[ ] Borrado → que pida confirmación antes
+[ ] Borrado → que pida confirmación antes.
 
-[ ] Velocidad
+[ ] Velocidad.
 
 - Dos posibilidades: Más lento/Más rápido → Factor de multiplicación en la función sleep (1x, 2x, 3x). Contar el número de palabras de cada mensaje y estimar el tiempo.
 
@@ -24,11 +24,13 @@ Se trataría de que algunos autores escribieran historias en una web en formato 
 
 [ ] Más real que perfecto. Gammificación. Dar unos puntos iniciales por número de palabras. Si se modifica algo se pierden puntos. Si borras un mensaje pierdes los puntos de ese mensaje.
 
-[ ] La gente puede darle me gusta a las historias y comentar lo que realmente le gusta
+[ ] La gente puede darle me gusta a las historias y comentar lo que realmente le gusta.
 
 [ ] Los usuarios pueden acceder a las historias a las que le han dado un me gusta.
 
 [ ] Poner ambientación de fondo cuando se pasa al modo play.
+
+[ ] Historias colaborativas.
 
 ## License
 
