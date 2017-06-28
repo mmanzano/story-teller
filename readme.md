@@ -1,28 +1,37 @@
-# Hosted on [storyteller.mmanzano.com](http://storyteller.mmanzano.com)
+Puedes ver este código funcionando en [storyteller.mmanzano.com](http://storyteller.mmanzano.com) ;)
 
-# Laravel PHP Framework
+## Tecnologías
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+Laravel 5.3
+VueJS
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+## Idea
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Historias escritas y leidas al mismo tiempo que fueron creadas.
 
-## Official Documentation
+## Resumen
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+Se trataría de que algunos autores escribieran historias en una web en formato de mensajes cortos, como los de WhatsApp . El sistema grabaría el tiempo que pasa entre mensaje y mensaje. Al finalizar la historia el autor la haría disponible en la plataforma y yo, como usuario, podría consumirla. Entraría en la historia, le daría al play y boom. Me irían apareciendo los mensajes uno a uno con la misma diferencia de tiempos entre ellos que si tuviera al autor de la historia al otro lado.
 
-## Contributing
+## Backlog
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+[ ] Borrado → que pida confirmación antes.
 
-## Security Vulnerabilities
+[ ] Velocidad.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+- Dos posibilidades: Más lento/Más rápido → Factor de multiplicación en la función sleep (1x, 2x, 3x). Contar el número de palabras de cada mensaje y estimar el tiempo.
+
+[ ] Que aparezca algún gif indicando que hay más mensajes, algo así como: escribiendo…
+
+[ ] Más real que perfecto. Gammificación. Dar unos puntos iniciales por número de palabras. Si se modifica algo se pierden puntos. Si borras un mensaje pierdes los puntos de ese mensaje.
+
+[ ] La gente puede darle me gusta a las historias y comentar lo que realmente le gusta.
+
+[ ] Los usuarios pueden acceder a las historias a las que le han dado un me gusta.
+
+[ ] Poner ambientación de fondo cuando se pasa al modo play.
+
+[ ] Historias colaborativas.
 
 ## License
 
