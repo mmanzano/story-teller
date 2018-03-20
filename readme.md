@@ -15,6 +15,10 @@ Se trataría de que algunos autores escribieran historias en una web en formato 
 
 ## Backlog
 
+[ ] Configurar amazon SES para que salgan correos de verdad. Actualmente configurado con mailtrap.
+
+[ ] Una página de error 404.
+
 [ ] Borrado → que pida confirmación antes.
 
 [ ] Velocidad.
