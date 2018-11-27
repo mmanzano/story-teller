@@ -2,8 +2,17 @@ Puedes ver este código funcionando en [storyteller.mmanzano.com](http://storyte
 
 ## Tecnologías
 
-Laravel 5.3
+Laravel 5.5
+
 VueJS
+
+## Próximos pasos
+
+[] Implementar Tailwind
+
+[] Backend con IDD
+
+[] Mejoras del backlog
 
 ## Idea
 
